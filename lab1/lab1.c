@@ -42,8 +42,9 @@ void maketexture()
 		{		
 			float xf = (float)x / kTextureSize;
 			float yf = (float)y / kTextureSize;
-			float value = pnoise2(xf*4, yf*4, kTextureSize, kTextureSize);
-//			printf("%.5f\n", value);
+			float freq = 20.;
+			float value = pnoise2(xf*freq, yf*freq, kTextureSize, kTextureSize) * 10;
+			value = value - (int)value;
 			
 			// The returned pixel vaue is negative -0.5 to 0.5, so we normalize it to 0->244 below
 			float noisePixelValue = 144 + value*144;
