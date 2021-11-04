@@ -1,0 +1,55 @@
+# Project: Lab1
+# Makefile created by Embarcadero Dev-C++ 6.3
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = lab1.o noise/cellular.o noise/noise1234.o noise/simplexnoise1234.o ../common/GL_utilities.o ../common/LittleOBJLoader.o ../common/LoadTGA.o ../common/VectorUtils3.o ../common/Windows/glew.o ../common/Windows/MicroGlut.o
+LINKOBJ  = lab1.o noise/cellular.o noise/noise1234.o noise/simplexnoise1234.o ../common/GL_utilities.o ../common/LittleOBJLoader.o ../common/LoadTGA.o ../common/VectorUtils3.o ../common/Windows/glew.o ../common/Windows/MicroGlut.o
+LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -lopengl32
+INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
+CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
+BIN      = Lab1.exe
+CXXFLAGS = $(CXXINCS) -I../common -I../common/Windows -I noise
+CFLAGS   = $(INCS) -I../common -I../common/Windows -I noise
+DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${DEL} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+lab1.o: lab1.c
+	$(CC) -c lab1.c -o lab1.o $(CFLAGS)
+
+noise/cellular.o: noise/cellular.c
+	$(CC) -c noise/cellular.c -o noise/cellular.o $(CFLAGS)
+
+noise/noise1234.o: noise/noise1234.c
+	$(CC) -c noise/noise1234.c -o noise/noise1234.o $(CFLAGS)
+
+noise/simplexnoise1234.o: noise/simplexnoise1234.c
+	$(CC) -c noise/simplexnoise1234.c -o noise/simplexnoise1234.o $(CFLAGS)
+
+../common/GL_utilities.o: ../common/GL_utilities.c
+	$(CC) -c ../common/GL_utilities.c -o ../common/GL_utilities.o $(CFLAGS)
+
+../common/LittleOBJLoader.o: ../common/LittleOBJLoader.c
+	$(CC) -c ../common/LittleOBJLoader.c -o ../common/LittleOBJLoader.o $(CFLAGS)
+
+../common/LoadTGA.o: ../common/LoadTGA.c
+	$(CC) -c ../common/LoadTGA.c -o ../common/LoadTGA.o $(CFLAGS)
+
+../common/VectorUtils3.o: ../common/VectorUtils3.c
+	$(CC) -c ../common/VectorUtils3.c -o ../common/VectorUtils3.o $(CFLAGS)
+
+../common/Windows/glew.o: ../common/Windows/glew.c
+	$(CC) -c ../common/Windows/glew.c -o ../common/Windows/glew.o $(CFLAGS)
+
+../common/Windows/MicroGlut.o: ../common/Windows/MicroGlut.c
+	$(CC) -c ../common/Windows/MicroGlut.c -o ../common/Windows/MicroGlut.o $(CFLAGS)
