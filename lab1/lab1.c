@@ -42,7 +42,7 @@ void maketexture()
 		{		
 			float xf = (float)x / kTextureSize;
 			float yf = (float)y / kTextureSize;
-			float freq = 20.;
+			float freq = 7.;
 			float value = pnoise2(xf*freq, yf*freq, kTextureSize, kTextureSize) * 10;
 			value = value - (int)value;
 			
@@ -77,8 +77,10 @@ unsigned int vertexArrayObjID;
 GLuint texid;
 // Switch between CPU and shader generation
 int displayGPUversion = 0;
-	// Reference to shader program
-	GLuint program;
+// Reference to shader program
+GLuint program;
+GLint timeUniformLoc;
+float t = 0;
 
 void init(void)
 {
@@ -95,6 +97,8 @@ void init(void)
 	program = loadShaders("lab1.vert", "lab1.frag");
 	glUseProgram(program);
 	printError("init shader");
+	
+	timeUniformLoc = glGetUniformLocation(program, "time");
 	
 	// Upload gemoetry to the GPU:
 	
@@ -148,6 +152,15 @@ void key(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
+void onIDLE(){
+	//float t = glutGet(GLUT_ELAPSED_TIME);
+	// Update time variable in shader
+	t += 0.1f;
+	printf("%.4f\n", t);
+	glUseProgram(program);
+	glUniform1f(timeUniformLoc, t);
+}
+
 void display(void)
 {
 	printError("pre display");
@@ -171,6 +184,7 @@ int main(int argc, char *argv[])
 	glutCreateWindow ("Lab 1");
 	glutDisplayFunc(display);
 	glutKeyboardFunc(key);
+	glutIdleFunc (onIDLE);
 	init ();
 	glutMainLoop();
 }
