@@ -12,7 +12,8 @@ uniform sampler2D tex;
 uniform int displayGPUversion;
 uniform float ringDensity;
 
-uniform float time; // Time passed since program start
+// Addition for task 5
+uniform float time = 1.0; // Time passed since program start
 
 //const float ringDensity = 10.0;
 
@@ -113,26 +114,24 @@ float iqnoise( in vec2 x, float u, float v )
     return va/wt;
 }
 
-//vec4 task4Texture(){
-//	vec2 f = texCoord * 2.0 - vec2(1.0); // Convert to -1 to 1
-//	float radius = length(f); // Same as sqrt(fx*fx + fy * fy);
-//	return vec4(cos(radius * ringDensity)/ 2.0 + 0.5, 0.5, sin(radius * ringDensity)/ 2.0 + 0.5, 1.0);
-//
-//	//float value = fract(cnoise(f * 7.0));
-//	//value = fract(value);
-//	//return vec4(hash3(texCoord), 1.0) * value;
-//}
+vec4 task45Texture(){
+	vec2 f = texCoord * 2.0 - vec2(1.0); // Convert to -1 to 1
+
+	// Task 5 addition to animate
+	f += vec2(cos(time*0.01)*10, sin(time*0.01)*10);
+
+	float value = fract(cnoise(f * 7.0));
+	value = fract(value);
+	return vec4(hash3(f), 1.0) * value;
+}
+
+
 
 void main(void)
 {
 	if (displayGPUversion == 1)
 	{
-		//out_Color = task4Texture(); // Produce the texture for task 4
-		
-		vec2 f = texCoord * 2.0 - vec2(1.0); // Convert to -1 to 1                                        
-		float radius = length(f); // Same as sqrt(fx*fx + fy * fy);                                       
-		//out_Color = vec4(cos(radius * ringDensity)/ 2.0 + 0.5, 0.5, sin(radius * ringDensity)/ 2.0 + 0.5, 1.0);
-		out_Color = vec4(cos(time*0.01), 0.0, 0.0, 1.0);
+		out_Color = task45Texture();
 	}
 	else {
 		out_Color = texture(tex, texCoord);

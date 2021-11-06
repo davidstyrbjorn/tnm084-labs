@@ -156,9 +156,10 @@ void onIDLE(){
 	//float t = glutGet(GLUT_ELAPSED_TIME);
 	// Update time variable in shader
 	t += 0.1f;
-	printf("%.4f\n", t);
 	glUseProgram(program);
 	glUniform1f(timeUniformLoc, t);
+	
+	glutPostRedisplay();
 }
 
 void display(void)
