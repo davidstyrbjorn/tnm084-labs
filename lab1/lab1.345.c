@@ -44,14 +44,10 @@ void maketexture()
 			float yf = (float)y / kTextureSize;
 			float freq = 7.;
 			float value = pnoise2(xf*freq, yf*freq, kTextureSize, kTextureSize) * 10;
-			value = value - (int)value; // Keep the decimal
+			value = value - (int)value;
 			
 			// The returned pixel vaue is negative -0.5 to 0.5, so we normalize it to 0->244 below
 			float noisePixelValue = 144 + value*144;
-					
-//			ptex[x][y][0] = noisePixelValue;
-//			ptex[x][y][1] = noisePixelValue;
-//			ptex[x][y][2] = noisePixelValue;
 						
 			ptex[x][y][0] = noisePixelValue * (xf > 0.5 && yf > 0.5);
 			ptex[x][y][1] = noisePixelValue * (xf < 0.5);
@@ -156,10 +152,11 @@ void key(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
-void onIDLE() {
-	t += 0.1f; // TODO: Delta time to make it frame-independent
-
-	// Upload to GPU
+void onIDLE(){
+	float t = glutGet(GLUT_ELAPSED_TIME);
+	// Update time variable in shader
+	//t += 0.1f;
+	glUseProgram(program);
 	glUniform1f(timeUniformLoc, t);
 	
 	glutPostRedisplay();

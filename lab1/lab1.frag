@@ -121,7 +121,6 @@ vec4 task45Texture(){
 	f += vec2(cos(time*0.01)*10, sin(time*0.01)*10);
 
 	float value = fract(cnoise(f * 7.0));
-	value = fract(value);
 	return vec4(hash3(f), 1.0) * value;
 }
 
