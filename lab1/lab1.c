@@ -26,6 +26,8 @@
 GLubyte ptex[kTextureSize][kTextureSize][3];
 const float ringDensity = 20.0;
 
+float timer = 0.0f;
+
 // Example: Radial pattern.
 void maketexture()
 {
@@ -156,15 +158,6 @@ void key(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
-void onIDLE() {
-	t += 0.1f; // TODO: Delta time to make it frame-independent
-
-	// Upload to GPU
-	glUniform1f(timeUniformLoc, t);
-	
-	glutPostRedisplay();
-}
-
 void display(void)
 {
 	printError("pre display");
@@ -180,6 +173,15 @@ void display(void)
 	glutSwapBuffers();
 }
 
+void timerCallback(int millisec){
+	glutTimerFunc(millisec, timerCallback, millisec); // Call this func again after 50 milliseconds
+	
+	timer += 0.1f;
+	glUniform1f(timeUniformLoc, timer);
+	
+	glutPostRedisplay();
+}
+
 int main(int argc, char *argv[])
 {
 	glutInit(&argc, argv);
@@ -188,7 +190,8 @@ int main(int argc, char *argv[])
 	glutCreateWindow ("Lab 1");
 	glutDisplayFunc(display);
 	glutKeyboardFunc(key);
-	glutIdleFunc (onIDLE);
+	//glutIdleFunc (onIDLE);
+	glutTimerFunc(16, timerCallback, 16); // draw every 50 ms
 	init ();
 	glutMainLoop();
 }
