@@ -1,0 +1,13 @@
+shader basic_shader(
+    point position = point(0.0, 0.0, 0.0),
+    color in_color = color(1.0, 1.0, 1.0),
+    output float out_float = 0.0,
+    output color out_color = color(0.0, 0.0, 0.0)
+    )
+{
+    float frequency = 10.0;
+
+    float noise_v = noise(position*frequency);
+    out_float = noise_v;
+    out_color = in_color * noise_v;
+}
